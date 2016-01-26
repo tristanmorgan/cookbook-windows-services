@@ -6,5 +6,10 @@ gem 'rubocop'
 gem 'rspec'
 gem 'chefspec'
 gem 'berkshelf'
-gem 'serverspec'
-gem 'winrm'
+
+group :runtest do
+  gem 'serverspec'
+  gem 'winrm'
+
+  gem 'test-kitchen'
+end
