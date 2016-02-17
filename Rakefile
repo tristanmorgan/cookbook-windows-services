@@ -1,14 +1,15 @@
 require 'rubocop/rake_task'
-# require 'foodcritic'
+require 'foodcritic'
 require 'rspec/core/rake_task'
+require 'kitchen/rake_tasks'
 
 RuboCop::RakeTask.new do |rubocop|
   rubocop.options = ['-D']
 end
 
-# FoodCritic::Rake::LintTask.new do |foodcritic|
-#  foodcritic.options[:fail_tags] = 'any'
-# end
+FoodCritic::Rake::LintTask.new do |foodcritic|
+  foodcritic.options[:fail_tags] = 'any'
+end
 
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/unit/**/*_spec.rb'
@@ -39,3 +40,5 @@ namespace :serverspec do
     end
   end
 end
+
+Kitchen::RakeTasks.new

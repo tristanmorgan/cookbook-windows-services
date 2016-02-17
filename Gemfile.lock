@@ -89,6 +89,16 @@ GEM
     ffi (1.9.10)
     ffi-yajl (2.2.3)
       libyajl2 (~> 1.2)
+    foodcritic (6.0.0)
+      erubis
+      gherkin (~> 2.11)
+      nokogiri (>= 1.5, < 2.0)
+      rake
+      rufus-lru (~> 1.0)
+      treetop (~> 1.4)
+      yajl-ruby (~> 1.1)
+    gherkin (2.12.2)
+      multi_json (~> 1.3)
     gssapi (1.2.0)
       ffi (>= 1.0.1)
     gyoku (1.3.1)
@@ -99,6 +109,8 @@ GEM
     httpclient (2.6.0.1)
     ipaddress (0.8.2)
     json (1.8.3)
+    kitchen-vagrant (0.19.0)
+      test-kitchen (~> 1.4)
     libyajl2 (1.2.0)
     little-plugger (1.1.4)
     logging (2.0.0)
@@ -128,6 +140,7 @@ GEM
       net-ssh-gateway (>= 1.2.0)
     net-telnet (0.1.1)
     nio4r (1.2.0)
+    nokogiri (1.5.6)
     nori (2.6.0)
     octokit (3.8.0)
       sawyer (~> 0.6.0, >= 0.5.3)
@@ -146,6 +159,7 @@ GEM
     parser (2.3.0.1)
       ast (~> 2.2)
     plist (3.1.0)
+    polyglot (0.3.5)
     powerpack (0.1.1)
     proxifier (1.0.3)
     pry (0.10.3)
@@ -200,6 +214,8 @@ GEM
       ruby-progressbar (~> 1.7)
     ruby-progressbar (1.7.5)
     rubyntlm (0.5.3)
+    rubyzip (1.1.7)
+    rufus-lru (1.0.5)
     safe_yaml (1.0.4)
     sawyer (0.6.0)
       addressable (~> 2.3.5)
@@ -233,6 +249,8 @@ GEM
     thor (0.19.1)
     timers (4.0.4)
       hitimes
+    treetop (1.6.3)
+      polyglot (~> 0.3)
     uuidtools (2.1.5)
     varia_model (0.4.1)
       buff-extensions (~> 1.0)
@@ -245,7 +263,11 @@ GEM
       logging (>= 1.6.1, < 3.0)
       nori (~> 2.0)
       rubyntlm (~> 0.5.0, >= 0.5.3)
+    winrm-transport (1.0.3)
+      rubyzip (~> 1.1, >= 1.1.7)
+      winrm (~> 1.3)
     wmi-lite (1.0.0)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
@@ -253,12 +275,16 @@ PLATFORMS
 DEPENDENCIES
   berkshelf
   chefspec
+  foodcritic
+  kitchen-vagrant
+  nokogiri (= 1.5.6)
   rake
   rspec
   rubocop
   serverspec
   test-kitchen
   winrm
+  winrm-transport
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
