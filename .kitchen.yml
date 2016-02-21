@@ -1,12 +1,29 @@
 ---
 driver:
-  name: vagrant
+  name: ec2
+  region: ap-southeast-2
+  availability_zone: ap-southeast-2c
+  instance_type: t2.micro
+  subnet_id: subnet-f00dcafe
+  security_group_ids: [sg-71077345]
+  aws_ssh_key_id: personal
+  image_id: ami-9b4f15f8
+  user_data: files/user_data.txt
+  interface: private
+  block_device_mappings:
+    - device_name: /dev/sda1
+      ebs:
+        volume_size: 64
+        delete_on_termination: true
 
 provisioner:
   name: chef_zero
 
 platforms:
-  - name: win2012r2chef
+  - name: windows-2012r2
+
+transport:
+  ssh_key: ~/.ssh/personal
 
 suites:
   - name: default

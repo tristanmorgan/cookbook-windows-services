@@ -6,14 +6,14 @@ gem 'rubocop'
 gem 'rspec'
 gem 'chefspec'
 gem 'berkshelf'
-gem 'nokogiri', '=1.5.6'
-gem 'foodcritic'
+gem 'foodcritic', '=6.0.0'
+gem 'chef', '=12.7.2'
+gem 'chef-zero', '=4.5.0'
 
 group :runtest do
   gem 'serverspec'
-  gem 'winrm'
+  gem 'winrm-fs'
 
   gem 'test-kitchen'
-  gem 'kitchen-vagrant'
-  gem 'winrm-transport'
+  gem 'kitchen-ec2'
 end

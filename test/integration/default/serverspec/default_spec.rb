@@ -10,8 +10,4 @@ describe 'windows-services::default' do
     it { should_not be_enabled }
     it { should have_start_mode('Disabled') }
   end
-
-  describe user('vagrant') do
-    it { should exist }
-  end
 end

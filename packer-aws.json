@@ -1,0 +1,37 @@
+{
+  "variables": {
+     "tag-build-branch": "{{env `bamboo_repository_git_branch`}}",
+    "tag-prev-revision": "{{env `bamboo_repository_previous_revision_number`}}",
+    "tag-repository": "{{env `bamboo_repository_git_repositoryUrl`}}",
+    "tag-revision": "{{env `bamboo_repository_revision_number`}}",
+    "ami-name": "{{env `bamboo_buildResultKey`}}"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "ap-southeast-2",
+    "instance_type": "t2.medium",
+    "source_ami": "ami-db0a2db8",
+    "ami_name": "{{user `ami-name`}}",
+    "user_data_file": "files/user_data.txt",
+    "communicator": "winrm",
+    "winrm_timeout": "4h",
+    "winrm_username": "Administrator",
+    "subnet_id": "subnet-f00dcafe",
+    "security_group_ids": ["sg-71077345"],
+    "associate_public_ip_address": false,
+    "iam_instance_profile": "ChefNode",
+    "ami_users": ["833999999081"],
+    "tags": {
+      "branch_name": "{{user `tag-build-branch`}}",
+      "prev_revision": "{{user `tag-prev-revision`}}",
+      "repository": "{{user `tag-repository`}}",
+      "revision": "{{user `tag-revision`}}"
+    }
+  }],
+  "provisioners": [{
+    "type": "chef-solo",
+    "guest_os_type": "windows",
+    "cookbook_paths": [".."],
+    "run_list": ["recipe[windows-services]", "recipe[ec2config]"]
+  }]
+}

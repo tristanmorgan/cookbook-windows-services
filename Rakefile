@@ -16,14 +16,12 @@ RSpec::Core::RakeTask.new(:spec) do |t|
 end
 
 desc 'Run Rubocop and Foodcritic style checks'
-task style: [:rubocop] # , :foodcritic]
+task style: [:rubocop, :foodcritic]
 
 desc 'Run all style checks and unit tests'
 task test: [:style, :spec]
 
 task default: :test
-
-require 'rake'
 
 namespace :serverspec do
   targets = ['localhost']
