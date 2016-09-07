@@ -15,6 +15,8 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/unit/**/*_spec.rb'
 end
 
+FoodCritic::Rake::LintTask.new
+
 desc 'Run Rubocop and Foodcritic style checks'
 task style: [:rubocop, :foodcritic]
 
