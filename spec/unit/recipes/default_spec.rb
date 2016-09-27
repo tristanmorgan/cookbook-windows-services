@@ -6,7 +6,7 @@
 
 require 'spec_helper'
 
-describe 'windows-services::default' do
+RSpec.describe 'windows-services::default' do
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new

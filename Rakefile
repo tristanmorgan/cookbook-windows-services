@@ -42,3 +42,14 @@ namespace :serverspec do
 end
 
 Kitchen::RakeTasks.new
+
+namespace :packer do
+  desc 'run packer build'
+  task :build do
+    require 'mixlib/shellout'
+    cmd = Mixlib::ShellOut.new('packer validate packer-aws.json')
+    cmd.live_stdout = $stdout
+    cmd.run_command
+    cmd.error!
+  end
+end
