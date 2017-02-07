@@ -1,19 +1,19 @@
 # A sample Gemfile
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'cookstyle'
-gem 'rspec'
-gem 'chefspec'
 gem 'berkshelf'
-gem 'foodcritic'
 gem 'chef'
 gem 'chef-zero'
+gem 'chefspec'
+gem 'cookstyle'
+gem 'foodcritic'
+gem 'rake'
+gem 'rspec'
 
 group :runtest do
   gem 'serverspec'
   gem 'winrm-fs'
 
-  gem 'test-kitchen'
   gem 'kitchen-ec2'
+  gem 'test-kitchen'
 end
