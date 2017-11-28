@@ -5,9 +5,9 @@
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
 service 'Themes' do
-  action [:disable, :stop]
+  action %i[disable stop]
 end
 
 service 'Spooler' do
-  action [:disable, :stop]
+  action %i[disable stop]
 end

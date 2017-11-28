@@ -10,8 +10,12 @@
 bin/*
 .bundle/*
 
+vendor/
+
 .kitchen/
 .kitchen.local.yml
 
 # RSpec
 /spec/examples.txt
+Gemfile.lock
+runtime-vars.json

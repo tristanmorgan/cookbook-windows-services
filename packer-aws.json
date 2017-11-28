@@ -1,37 +1,66 @@
 {
-  "variables": {
-     "tag-build-branch": "{{env `bamboo_repository_git_branch`}}",
-    "tag-prev-revision": "{{env `bamboo_repository_previous_revision_number`}}",
-    "tag-repository": "{{env `bamboo_repository_git_repositoryUrl`}}",
-    "tag-revision": "{{env `bamboo_repository_revision_number`}}",
-    "ami-name": "{{env `bamboo_buildResultKey`}}"
-  },
-  "builders": [{
-    "type": "amazon-ebs",
-    "region": "ap-southeast-2",
-    "instance_type": "t2.medium",
-    "source_ami": "ami-db0a2db8",
-    "ami_name": "{{user `ami-name`}}",
-    "user_data_file": "files/user_data.txt",
-    "communicator": "winrm",
-    "winrm_timeout": "4h",
-    "winrm_username": "Administrator",
-    "subnet_id": "subnet-f00dcafe",
-    "security_group_ids": ["sg-71077345"],
-    "associate_public_ip_address": false,
-    "iam_instance_profile": "ChefNode",
-    "ami_users": ["833999999081"],
-    "tags": {
-      "branch_name": "{{user `tag-build-branch`}}",
-      "prev_revision": "{{user `tag-prev-revision`}}",
-      "repository": "{{user `tag-repository`}}",
-      "revision": "{{user `tag-revision`}}"
+  "builders": [
+    {
+      "ami_name": "{{user `dest_ami_name` | clean_ami_name}}",
+      "communicator": "winrm",
+      "instance_type": "t2.medium",
+      "region": "{{user `default_region`}}",
+      "security_group_id": "{{user `security_group`}}",
+      "source_ami_filter": {
+        "filters": {
+          "architecture": "x86_64",
+          "name": "{{user `source_ami_name`}}",
+          "root-device-type": "ebs",
+          "virtualization-type": "hvm"
+        },
+        "most_recent": true,
+        "owners": [
+          "amazon"
+        ]
+      },
+      "subnet_id": "{{user `dest_subnet_id`}}",
+      "tags": {
+        "git_branch": "{{user `git_branch`}}",
+        "git_commit": "{{user `git_commit`}}",
+        "git_url": "{{user `git_url`}}",
+        "source_ami_name": "{{user `source_ami_name`}}"
+      },
+      "type": "amazon-ebs",
+      "user_data_file": "files/user_data.txt",
+      "vpc_id": "{{user `dest_vpc_id`}}",
+      "winrm_timeout": "4h",
+      "winrm_username": "Administrator"
     }
-  }],
-  "provisioners": [{
-    "type": "chef-solo",
-    "guest_os_type": "windows",
-    "cookbook_paths": [".."],
-    "run_list": ["recipe[windows-services]", "recipe[ec2config]"]
-  }]
+  ],
+  "post-processors": [],
+  "provisioners": [
+    {
+      "cookbook_paths": [
+        "vendor/cookbooks"
+      ],
+      "guest_os_type": "windows",
+      "run_list": [
+        "recipe[windows-services]"
+      ],
+      "type": "chef-solo"
+    },
+    {
+      "inline": [
+        "\"C:\\Program Files\\Amazon\\Ec2ConfigService\\ec2config.exe\" -sysprep"
+      ],
+      "type": "windows-shell"
+    }
+  ],
+  "variables": {
+    "default_region": "ap-southeast-2",
+    "dest_ami_name": "ofw-windows-base-{{isotime \"2006-01-02\"}}-{{timestamp}}",
+    "dest_subnet_id": "subnet-deadbeef",
+    "dest_vpc_id": "vpc-cafef00d",
+    "git_branch": "null",
+    "git_commit": "null",
+    "git_url": "null",
+    "security_group": "sg-1337d00d",
+    "source_ami_name": "Windows_Server-2012-R2_RTM-English-64Bit-Base-????.??.??"
+  }
 }
+

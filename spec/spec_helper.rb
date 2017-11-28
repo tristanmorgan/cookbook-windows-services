@@ -90,6 +90,12 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  # Specify the operating platform to mock Ohai data from (default: nil)
+  config.platform = 'windows'
+
+  # Specify the operating version to mock Ohai data from (default: nil)
+  config.version = '2012R2'
 end
 
 set :backend, :winrm

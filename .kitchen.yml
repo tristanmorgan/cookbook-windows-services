@@ -2,12 +2,10 @@
 driver:
   name: ec2
   region: ap-southeast-2
-  availability_zone: ap-southeast-2c
   instance_type: t2.micro
-  subnet_id: subnet-f00dcafe
-  security_group_ids: [sg-71077345]
+  subnet_id: subnet-deadbeef
+  security_group_ids: [sg-1337d00d]
   aws_ssh_key_id: personal
-  image_id: ami-9b4f15f8
   user_data: files/user_data.txt
   interface: private
   block_device_mappings:
@@ -17,7 +15,7 @@ driver:
         delete_on_termination: true
 
 provisioner:
-  name: chef_zero
+  name: chef_solo
 
 platforms:
   - name: windows-2012r2
