@@ -1,18 +1,23 @@
 <powershell>
 
+$logfile=C:\Program Files\Amazon\Ec2ConfigService\Logs\packer-ec2.log
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 
 winrm quickconfig -q
-winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="2048"}'
-winrm set winrm/config '@{MaxTimeoutms="1800000"}'
-winrm set winrm/config/service '@{AllowUnencrypted="true"}'
-winrm set winrm/config/service/auth '@{Basic="true"}'
+Enable-PSRemoting -Force -SkipNetworkProfileCheck
+winrm set winrm/config '@{MaxTimeoutms="1800000"}' >> $logfile
+winrm set winrm/config '@{MaxBatchItems="32000"}' >> $logfile
+winrm set winrm/config '@{MaxEnvelopeSizekb="8192″}' >> $logfile
+winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="2048"}' >> $logfile
+winrm set winrm/config/winrs '@{MaxShellsPerUser="50"}' >> $logfile
+winrm set winrm/config/service '@{AllowUnencrypted="true"}' >> $logfile
+winrm set winrm/config/service/auth '@{Basic="true"}' >> $logfile
 
-netsh advfirewall firewall add rule name="WinRM 5985" protocol=TCP dir=in localport=5985 action=allow
-netsh advfirewall firewall add rule name="WinRM 5986" protocol=TCP dir=in localport=5986 action=allow
+netsh advfirewall firewall add rule name="WinRM 5985" protocol=TCP dir=in localport=5985 action=allow >> $logfile
+netsh advfirewall firewall add rule name="WinRM 5986" protocol=TCP dir=in localport=5986 action=allow >> $logfile
 
-net stop winrm
-Set-Service winrm -startuptype "auto"
-net start winrm
+net stop winrm >> $logfile
+Set-Service winrm -startuptype "auto" >> $logfile
+net start winrm >> $logfile
 
 </powershell>
